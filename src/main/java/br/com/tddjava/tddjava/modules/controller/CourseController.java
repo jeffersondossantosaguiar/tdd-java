@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/courses")
 public class CourseController {
 
-    @Autowired
-    private CourseRepository repository;
+    private final CreateCourseService createCourseService;
+
+    public CourseController(CourseRepository repository) {
+        this.createCourseService = new CreateCourseService(repository);
+    }
 
     @PostMapping()
-
     public Course createCourse(@RequestBody Course course) {
-        CreateCourseService createCourseService = new CreateCourseService(repository);
         return createCourseService.execute(course);
     }
 }
